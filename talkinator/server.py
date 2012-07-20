@@ -13,8 +13,8 @@ Add this to {freeswitch}/conf/dialplan/default.xml:
   </extension>
 
 It depends on tts_commandline to synthesize audio.
-And pocketsphinx for speech recognition. Copy all files from grammar/
-to {freeswitch}/grammar.
+And pocketsphinx for speech recognition:
+  copy all files from grammar/ to {freeswitch}/grammar/
 
 Enjoy!
 """
@@ -62,8 +62,8 @@ class QuestionsMixin(object):
 
     @defer.inlineCallbacks
     def say(self, text):
-        yield self.execute("speak",
-                           "tts_commandline|%s|%s" % (self.QM_voice, text))
+        yield self.execute("speak", "tts_commandline|%s|%s" % (self.QM_voice,
+                                                               text))
         ev = yield self.QM_queue["_speak"].get()
         defer.returnValue(ev)
 
@@ -195,10 +195,11 @@ class AkinatorCall(eventsocket.EventProtocol, QuestionsMixin):
                         "Ok",
                         "Ok, wait...",
                         "Ok!!",
+                        "Really??",
                         "\item=Swallow",
                         "\item=Mmm",
                         "\item=Oh",
-                    ][random.randint(0, 5)])
+                    ][random.randint(0, 6)])
 
             elif isinstance(text, akinator.AkinatorAnswer):
                 yield self.say("%s \item=Laugh" % text.encode("utf-8"))

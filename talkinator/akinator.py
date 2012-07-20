@@ -1,11 +1,16 @@
+#!/usr/bin/env python
 # coding: utf-8
+#
+# Interactive command line crawler to akinator.com
+# http://musta.sh/2012-07-20/twisting-python-and-freeswitch.html
 
 import re
 import sys
 
-from urllib import urlencode
+from twisted.internet import defer
+from twisted.internet import reactor
 from twisted.web import client
-from twisted.internet import defer, reactor
+from urllib import urlencode
 
 from talkinator.BeautifulSoup import BeautifulSoup
 
