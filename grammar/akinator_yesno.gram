@@ -1,0 +1,9 @@
+#JSGF V1.0;
+
+/**
+  * JSGF Grammar for talkinator
+  */
+
+grammar akinator_yesno;
+public <akinator_yesno> = yes | yep | correct | [ i ] think so | no | nope | no way | not sure | maybe | perhaps | dunno | [ i ] don't know;
+

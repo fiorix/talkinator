@@ -1,0 +1,9 @@
+#JSGF V1.0;
+
+/**
+  * JSGF Grammar for talkinator
+  */
+
+grammar akinator_gender;
+public <akinator_gender> = male | boy | man | female | girl | woman | not sure;
+
