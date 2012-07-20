@@ -1,5 +1,7 @@
 # coding: utf-8
-# module info:
+#
+# talkinator event socket server
+# http://musta.sh/2012-07-20/twisting-python-and-freeswitch.html
 """\
 Talking Akinator event socket server
 
