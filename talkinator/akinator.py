@@ -15,18 +15,6 @@ from urllib import urlencode
 from talkinator.BeautifulSoup import BeautifulSoup
 
 
-class AkinatorAnswer(unicode):
-    pass
-
-
-class AkinatorError(unicode):
-    pass
-
-
-class AkinatorQuestion(unicode):
-    pass
-
-
 class AkinatorChat:
     def __init__(self, name, age, gender, language="en"):
         self.answer = 0
@@ -73,13 +61,13 @@ class AkinatorChat:
                     result = re.findall('("[^"]+)', script.text)
                     character = result[2].strip('"').split("/")[0]
                 except:
-                    return AkinatorError(div.text)
+                    return (0, div.text)
                 else:
                     self.done = True
                     script.extract()
-                    return AkinatorAnswer("%s %s" % (div.text, character))
+                    return (1, "%s %s" % (div.text, character))
             else:
-                return AkinatorQuestion(div.text)
+                return (2, div.text)
         except:
             pass
 
@@ -140,19 +128,14 @@ def interactive(*args):
 
     akinator = AkinatorChat(*args)
 
-    for command in akinator:
-        text = yield command
+    for cmd in akinator:
+        r, text = yield cmd
 
-        if isinstance(text, AkinatorQuestion):
+        if r == 2:  # Question
             answer = raw_input("%s " % text.encode("utf-8"))
             akinator.put_answer(answer)
-        elif isinstance(text, AkinatorAnswer):
+        else:  # Answer or Error
             print(text.encode("utf-8"))
-            break
-        elif isinstance(text, AkinatorError):
-            print(text.encode("utf-8"))
-            break
-        else:
             break
 
 
