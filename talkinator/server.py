@@ -169,9 +169,9 @@ class AkinatorCall(eventsocket.EventProtocol, QuestionsMixin):
         age = random.randrange(22, 38)  # no grammar for this :p
         session = akinator.AkinatorChat(name, age, gender)
 
-        for n, command in enumerate(session):
-            text = yield command
-            if isinstance(text, akinator.AkinatorQuestion):
+        for n, cmd in enumerate(session):
+            r, text = yield cmd
+            if r == 2:  # Question
                 for x in xrange(3):
                     answer = yield self.ask(text.encode("utf-8"),
                                             "akinator_yesno")
@@ -203,13 +203,11 @@ class AkinatorCall(eventsocket.EventProtocol, QuestionsMixin):
                         "\item=Oh",
                     ][random.randint(0, 6)])
 
-            elif isinstance(text, akinator.AkinatorAnswer):
+            elif r == 1:  # Answer
                 yield self.say("%s \item=Laugh" % text.encode("utf-8"))
                 break
-            elif isinstance(text, akinator.AkinatorError):
+            else:  # Error
                 yield self.say(text.encode("utf-8"))
-                break
-            else:
                 break
 
         yield self.hangup()
