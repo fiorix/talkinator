@@ -1,6 +1,9 @@
 talkinator
 ==========
 
+**NOTE: akinator.com has recently switched to websockets, and I have no plans
+to support it. This code is outdated and might be deleted anytime.**
+
 *For the latest source code, see <http://github.com/fiorix/talkinator>*
 
 
